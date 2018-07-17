@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,7 +59,7 @@ public class BucketController {
 	    		}
 	    		in.close();
 	    	}
-	    	JSONObject jsonO = new JSONObject(content.toString());
+	    	//JSONObject jsonO = new JSONObject(content.toString());
 	    	
 	    	//jsonO.get(arg0)
 	    	con.disconnect();
