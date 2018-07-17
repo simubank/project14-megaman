@@ -2,6 +2,7 @@ package com.example.Buckets;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -59,9 +60,12 @@ public class BucketController {
 	    		}
 	    		in.close();
 	    	}
-	    	//JSONObject jsonO = new JSONObject(content.toString());
+	    	// 
 	    	
-	    	//jsonO.get(arg0)
+	    	JsonObject  jsonO = new JsonObject();
+	    	
+	    	
+	    	
 	    	con.disconnect();
     		return content.toString();
 		} catch (Exception e) {
