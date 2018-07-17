@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BucketController {
     
     private static final String ParameterStringBuilder = null;
+    protected static Logger logger = Logger.getLogger(BucketController.class);
 
 	@RequestMapping("/")
     public String index() {
@@ -38,12 +40,14 @@ public class BucketController {
     public String apiTest(@RequestParam("id") String id) {
     	URL url;
 		try {
+			logger.info(" getting account info from botsfinancial accounts api with account #" + id);
 			url = new URL("https://dev.botsfinancial.com/api/accounts/" + id);
 	    	HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	    	con.setRequestMethod("GET");
 	    	con.setRequestProperty("Content-Type", "application/json");
 	    	int status = con.getResponseCode();
-	    	if(true) {
+	    	logger.info("server responded with status code " + status);
+	    	if(status >= 200 && status < 400) {
 	    		BufferedReader in = new BufferedReader(
 	    				  new InputStreamReader(con.getInputStream()));
 	    		String inputLine;
@@ -55,7 +59,7 @@ public class BucketController {
 	    	}
 	    	con.disconnect();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
     	return "";
