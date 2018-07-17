@@ -10,7 +10,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class BucketController {
@@ -33,10 +35,10 @@ public class BucketController {
     }
     
     @GetMapping("/apitest")
-    public String apiTest() {
+    public String apiTest(@RequestParam("id") String id) {
     	URL url;
 		try {
-			url = new URL("https://dev.botsfinancial.com/api/accounts/123");
+			url = new URL("https://dev.botsfinancial.com/api/accounts/" + id);
 	    	HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	    	con.setRequestMethod("GET");
 	    	con.setRequestProperty("Content-Type", "application/json");
