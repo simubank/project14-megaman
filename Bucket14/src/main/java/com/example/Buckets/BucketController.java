@@ -2,18 +2,15 @@ package com.example.Buckets;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,8 +19,7 @@ public class BucketController {
     
     private static final String ParameterStringBuilder = null;
     protected static Logger logger = Logger.getLogger(BucketController.class);
-    protected static final String KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDQlAiLCJ0ZWFtX2lkIjoiMjgxMzg1MCIsImV4cCI6OTIyMzM3MjAzNjg1NDc3NSwiYXBwX2lkIjoiMzFkMWYyNWItMDU0Ni00NTczLTkxOTItZGJmNTVlZjRjZGZkIn0.08_I3LRu0KvoId4drqurwIkxrNA4vJBlrlAGBt5b3do"
-    		;
+    protected static final String KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDQlAiLCJ0ZWFtX2lkIjoiMjgxMzg1MCIsImV4cCI6OTIyMzM3MjAzNjg1NDc3NSwiYXBwX2lkIjoiMzFkMWYyNWItMDU0Ni00NTczLTkxOTItZGJmNTVlZjRjZGZkIn0.08_I3LRu0KvoId4drqurwIkxrNA4vJBlrlAGBt5b3do";
 
 	@RequestMapping("/")
     public String index() {
@@ -62,7 +58,9 @@ public class BucketController {
 	    		}
 	    		in.close();
 	    	}
+	    	JSONObject jsonO = new JSONObject(content.toString());
 	    	
+	    	//jsonO.get(arg0)
 	    	con.disconnect();
     		return content.toString();
 		} catch (Exception e) {
