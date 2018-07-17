@@ -2,6 +2,8 @@ package com.example.Buckets;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -20,6 +22,8 @@ public class BucketController {
     
     private static final String ParameterStringBuilder = null;
     protected static Logger logger = Logger.getLogger(BucketController.class);
+    protected static final String KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDQlAiLCJ0ZWFtX2lkIjoiMjgxMzg1MCIsImV4cCI6OTIyMzM3MjAzNjg1NDc3NSwiYXBwX2lkIjoiMzFkMWYyNWItMDU0Ni00NTczLTkxOTItZGJmNTVlZjRjZGZkIn0.08_I3LRu0KvoId4drqurwIkxrNA4vJBlrlAGBt5b3do"
+    		;
 
 	@RequestMapping("/")
     public String index() {
@@ -45,19 +49,22 @@ public class BucketController {
 	    	HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	    	con.setRequestMethod("GET");
 	    	con.setRequestProperty("Content-Type", "application/json");
+	    	con.setRequestProperty("Authorization", KEY);
 	    	int status = con.getResponseCode();
 	    	logger.info("server responded with status code " + status);
+	    	StringBuffer content = new StringBuffer();
 	    	if(status >= 200 && status < 400) {
 	    		BufferedReader in = new BufferedReader(
 	    				  new InputStreamReader(con.getInputStream()));
 	    		String inputLine;
-	    		StringBuffer content = new StringBuffer();
 	    		while ((inputLine = in.readLine()) != null) {
 	    			content.append(inputLine);
 	    		}
 	    		in.close();
 	    	}
+	    	
 	    	con.disconnect();
+    		return content.toString();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
