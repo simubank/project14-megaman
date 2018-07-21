@@ -21,8 +21,12 @@ public class BucketController {
     
     private static final String ParameterStringBuilder = null;
     protected static Logger logger = Logger.getLogger(BucketController.class);
-    protected static final String KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDQlAiLCJ0ZWFtX2lkIjoiMjgxMzg1MCIsImV4cCI6OTIyMzM3MjAzNjg1NDc3NSwiYXBwX2lkIjoiMzFkMWYyNWItMDU0Ni00NTczLTkxOTItZGJmNTVlZjRjZGZkIn0.08_I3LRu0KvoId4drqurwIkxrNA4vJBlrlAGBt5b3do";
-
+    
+    // ----------------------------------app endpoints----------------------------------------
+    
+    
+    
+    //-----------------------------------testing endpoints -----------------------------------
 	@RequestMapping("/")
     public String index() {
         return "Greetings from Spring Boot!";
@@ -47,7 +51,7 @@ public class BucketController {
 	    	HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	    	con.setRequestMethod("GET");
 	    	con.setRequestProperty("Content-Type", "application/json");
-	    	con.setRequestProperty("Authorization", KEY);
+	    	con.setRequestProperty("Authorization", BucketUtilities.KEY);
 	    	int status = con.getResponseCode();
 	    	logger.info("server responded with status code " + status);
 	    	StringBuffer content = new StringBuffer();
@@ -62,7 +66,7 @@ public class BucketController {
 	    	}
 	    	// 
 	    	
-	    	JsonObject  jsonO = new JsonObject();
+	    	//JsonObject jsonO = content.toString();
 	    	
 	    	
 	    	
@@ -74,4 +78,6 @@ public class BucketController {
 		}
     	return "";
     }
+    
+    
 }
