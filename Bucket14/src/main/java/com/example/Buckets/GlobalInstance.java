@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 
 import bankapp.User;
 
@@ -12,6 +14,7 @@ public class GlobalInstance {
 	// this class contains global variables and helper functions
 	public static final String KEY = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDQlAiLCJ0ZWFtX2lkIjoiMjgxMzg1MCIsImV4cCI6OTIyMzM3MjAzNjg1NDc3NSwiYXBwX2lkIjoiMzFkMWYyNWItMDU0Ni00NTczLTkxOTItZGJmNTVlZjRjZGZkIn0.08_I3LRu0KvoId4drqurwIkxrNA4vJBlrlAGBt5b3do";
 	public static User global_user;
+	public static Date dateTime = Calendar.getInstance().getTime();
 	
 	
 	public static String getResult(String endpoint) {

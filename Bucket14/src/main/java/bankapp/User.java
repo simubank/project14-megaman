@@ -42,7 +42,7 @@ public class User {
 		String infoStr = GlobalInstance.getResult("https://dev.botsfinancial.com/api/customers/" + customer_id);
 		JsonParser parser = new JsonParser();
 		JsonElement ele = parser.parse(infoStr);
-		JsonObject userInfo = ele.getAsJsonObject().get("result").getAsJsonObject();
+		JsonObject userInfo = ele.getAsJsonObject().get("result").getAsJsonArray().get(0).getAsJsonObject();
 		// get name info
 		first_name = userInfo.get("givenName").getAsString();
 		last_name = userInfo.get("surname").getAsString();

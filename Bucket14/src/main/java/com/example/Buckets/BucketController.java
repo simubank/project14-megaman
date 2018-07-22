@@ -10,11 +10,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -31,15 +33,40 @@ public class BucketController {
     	String challengesStr = "";
     	String jarStr = "";
     	JsonObject response = new JsonObject();
+    	response.addProperty("serverTime", GlobalInstance.dateTime.toString());
     	response.addProperty("userName", GlobalInstance.global_user.first_name + " " + GlobalInstance.global_user.last_name);;
     	response.addProperty("numStars", GlobalInstance.global_user.stars);
     	response.addProperty("challenges", challengesStr);
     	response.addProperty("jars", jarStr);
-    	return "";
+    	return response.toString();
     }
     
     
     //-----------------------------------testing endpoints -----------------------------------
+    
+    
+    @PostMapping("/nextDay")
+    public String nextDay() {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(GlobalInstance.dateTime);
+    	cal.add(Calendar.DATE, 1);
+    	GlobalInstance.dateTime = cal.getTime();
+    	JsonObject response = new JsonObject();
+    	response.addProperty("date", GlobalInstance.dateTime.toString());
+    	return response.toString();
+    }
+    
+    @PostMapping("/nextWeek")
+    public String nextWeek() {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(GlobalInstance.dateTime);
+    	cal.add(Calendar.DATE, 1);
+    	GlobalInstance.dateTime = cal.getTime();
+    	JsonObject response = new JsonObject();
+    	response.addProperty("date", GlobalInstance.dateTime.toString());
+    	return response.toString();
+    }
+    
 	@RequestMapping("/")
     public String index() {
         return "Greetings from Spring Boot!";
