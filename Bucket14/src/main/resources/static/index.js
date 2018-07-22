@@ -1,7 +1,3 @@
-function signIn(){
-	var signInId = $("#login").val();
-	getFromServer("/login?id=" + signInId);
-}
 
 var username;
 var challenges, jars, servertime;
