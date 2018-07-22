@@ -1,6 +1,8 @@
 package com.example.Buckets;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,6 +27,51 @@ public class GlobalInstance {
         	con.setRequestMethod("GET");
         	con.setRequestProperty("Content-Type", "application/json");
         	con.setRequestProperty("Authorization", KEY);
+        	int status = con.getResponseCode();
+        	//System.out.println("server responded with status code" + status);
+        	StringBuffer content = new StringBuffer();
+        	if(status >= 200 && status < 400) {
+        		BufferedReader in = new BufferedReader(
+        				  new InputStreamReader(con.getInputStream()));
+        		String inputLine;
+        		while ((inputLine = in.readLine()) != null) {
+        			content.append(inputLine);
+        		}
+        		in.close();
+        	}
+        	
+        	
+        	
+        	
+        	
+        	con.disconnect();
+    		return content.toString();
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return "";
+    }
+	
+	public static String postHttp(String endpoint, String body) {
+    	URL url;
+    	try {
+    		url = new URL(endpoint);
+        	HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        	con.setRequestMethod("POST");
+        	con.setRequestProperty("Content-Type", "application/json");
+        	con.setDoOutput(true);
+        	con.setRequestProperty("Authorization", KEY);
+        	
+        	// write body to request
+        	DataOutputStream out = null;
+        	
+        	out = new DataOutputStream(con.getOutputStream());
+        	out.writeBytes(body);
+        	out.flush();
+        	out.close();
+        	
         	int status = con.getResponseCode();
         	//System.out.println("server responded with status code" + status);
         	StringBuffer content = new StringBuffer();

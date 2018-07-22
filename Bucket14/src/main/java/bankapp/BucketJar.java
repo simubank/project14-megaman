@@ -6,8 +6,8 @@ public class BucketJar {
 	public float current;
 	public String name;
 	
-	public BucketJar(String name) {
-		total = 0;
+	public BucketJar(String name, float total) {
+		this.total = total;
 		current = 0;
 		this.name = name;
 	}

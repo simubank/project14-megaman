@@ -26,8 +26,9 @@ public class User {
 	public ArrayList<Account> bank_accounts;
 	public ArrayList<Account> credit_card_accounts;
 	public ArrayList<Challenge> list_of_challenges;
-	public ArrayList<Transaction> newTransactions;
-	public ArrayList<JsonObject> transactions;
+	public ArrayList<Transaction> curWeekTransactions;// new transactions for this week
+	public ArrayList<Transaction> curMonthTransactions;// new transactions for this week
+	public ArrayList<Transaction> transactions;
 
 
 	public User(String login_customer_id) {
@@ -35,7 +36,7 @@ public class User {
 		customer_id = login_customer_id;
 		bank_accounts = new ArrayList<Account>();
 		list_of_challenges = new ArrayList<Challenge>();
-		transactions = new ArrayList<JsonObject>();
+		transactions = new ArrayList<Transaction>();
 		credit_card_accounts = new ArrayList<Account>();
 		
 		// retrieve info for the user from api
@@ -64,6 +65,10 @@ public class User {
 			credit_card_accounts.add(acct);
 		}
 		
+		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE);
+		challenges.add(coffeeChallenge);
+		BucketJar defaultJar = new BucketJar("General Savings", 99999);
+		jars.add(defaultJar);
 	}
 	
 	public void fetchUserTransactions() {
@@ -71,7 +76,65 @@ public class User {
 		JsonParser parser = new JsonParser();
 		JsonArray transArray = parser.parse(transStr).getAsJsonObject().get("result").getAsJsonArray();
 		for(JsonElement tr: transArray) {
-			transactions.add(tr.getAsJsonObject());
+			transactions.add(new Transaction(tr.getAsJsonObject()));
+		}
+	}
+	
+	public void processNewTransaction(JsonObject trans) {
+		Transaction transaction = new Transaction(trans);
+		// what should do when a new transaction comes in?
+		// first see the description of the transaction
+		curWeekTransactions.add(transaction);
+		curMonthTransactions.add(transaction);
+		String desc = trans.get("description").getAsString();
+		if(desc.contains("TIM HORTONS")) {
+			
+		}
+	}
+	
+	public void newChallenge() {
+		
+	}
+	
+	// logistics for endofweek or endofmonth procedures:
+	// 1. for each weekly challenge, count progress towards
+	public void endOfWeekProcedure() {
+		for(Challenge ch: challenges) {
+			if(ch.type != Challenge.WEEKLY_CHALLENGE) continue;
+			int progression = 0;
+			float total_saving = 0;
+			for(Transaction tr: curWeekTransactions) {
+				if(tr.description.contains(ch.transaction_desc_key) || 
+					tr.merchant.contains(ch.transaction_desc_key)) {
+					progression++;
+					total_saving += tr.amount;
+				}
+			}
+			if(ch.advance(progression, total_saving) != 0) {
+				BucketJar defaultJar = jars.get(0);
+				defaultJar.fillJar(ch.saving_accumulated);
+			}
+			curWeekTransactions.clear();
+		}
+	}
+	
+	public void endOfMonthProcedure() {
+		for(Challenge ch: challenges) {
+			if(ch.type != Challenge.WEEKLY_CHALLENGE) continue;
+			int progression = 0;
+			float total_saving = 0;
+			for(Transaction tr: curMonthTransactions) {
+				if(tr.description.contains(ch.transaction_desc_key) || 
+					tr.merchant.contains(ch.transaction_desc_key)) {
+					progression++;
+					total_saving += tr.amount;
+				}
+			}
+			if(ch.advance(progression, total_saving) != 0) {
+				BucketJar defaultJar = jars.get(0);
+				defaultJar.fillJar(ch.saving_accumulated);
+			}
+			curMonthTransactions.clear();
 		}
 	}
 

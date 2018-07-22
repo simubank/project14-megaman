@@ -3,8 +3,12 @@ package com.example.Buckets;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import bankapp.BucketJar;
 import bankapp.User;
+
+import static org.mockito.Matchers.intThat;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,6 +21,7 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,6 +46,25 @@ public class BucketController {
     	return response.toString();
     }
     
+    @GetMapping("/serverTime")
+    public String getServerDate() {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(GlobalInstance.dateTime);
+    	int date = cal.get(Calendar.DAY_OF_MONTH);
+    	// january is 1, feb. is 2, etc.
+    	int month = cal.get(Calendar.MONTH) + 1;
+    	JsonObject response = new JsonObject();
+    	response.addProperty("date", date);
+    	response.addProperty("month", month);
+    	return response.toString();
+    }
+    
+    @PostMapping("/createJar")
+    public String createNewJar(@RequestParam("name") String name, @RequestParam("goal") int goal) {
+    	BucketJar newJar = new BucketJar(name, (float)goal);
+    	GlobalInstance.global_user.jars.add(newJar);
+    	return "success";
+    }
     
     //-----------------------------------testing endpoints -----------------------------------
     
@@ -53,6 +77,12 @@ public class BucketController {
     	GlobalInstance.dateTime = cal.getTime();
     	JsonObject response = new JsonObject();
     	response.addProperty("date", GlobalInstance.dateTime.toString());
+    	if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+    		GlobalInstance.global_user.endOfWeekProcedure();
+    	}
+    	if(cal.get(Calendar.DAY_OF_MONTH) == 1) {
+    		GlobalInstance.global_user.endOfMonthProcedure();
+    	}
     	return response.toString();
     }
     
@@ -60,11 +90,22 @@ public class BucketController {
     public String nextWeek() {
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(GlobalInstance.dateTime);
-    	cal.add(Calendar.DATE, 1);
+    	cal.add(Calendar.DATE, 7);
     	GlobalInstance.dateTime = cal.getTime();
     	JsonObject response = new JsonObject();
     	response.addProperty("date", GlobalInstance.dateTime.toString());
     	return response.toString();
+    }
+    
+    @PostMapping("/makeTransaction")
+    public String makeTransaction(@RequestBody String transactionStr) {
+    	
+    	JsonParser parser = new JsonParser();
+    	JsonObject transaction = parser.parse(transactionStr).getAsJsonObject();
+    	GlobalInstance.global_user.processNewTransaction(transaction);
+    	String id = "";
+    	
+    	return id;
     }
     
 	@RequestMapping("/")
@@ -77,8 +118,9 @@ public class BucketController {
         return "Greetings from Spring Boot!";
     }
     
-    @GetMapping("/test2")
+    @PostMapping("/test2")
     public String test2() {
+    	String a = GlobalInstance.postHttp("", "");
         return "Greetings from Spring Boot!";
     }
     
