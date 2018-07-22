@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 
+import bankapp.User;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -23,7 +25,18 @@ public class BucketController {
     protected static Logger logger = Logger.getLogger(BucketController.class);
     
     // ----------------------------------app endpoints----------------------------------------
-    
+    @RequestMapping("/login")
+    public String login(@RequestParam("id") String id){
+    	GlobalInstance.global_user = new User(id);
+    	String challengesStr = "";
+    	String jarStr = "";
+    	JsonObject response = new JsonObject();
+    	response.addProperty("userName", GlobalInstance.global_user.first_name + " " + GlobalInstance.global_user.last_name);;
+    	response.addProperty("numStars", GlobalInstance.global_user.stars);
+    	response.addProperty("challenges", challengesStr);
+    	response.addProperty("jars", jarStr);
+    	return "";
+    }
     
     
     //-----------------------------------testing endpoints -----------------------------------
@@ -51,7 +64,7 @@ public class BucketController {
 	    	HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	    	con.setRequestMethod("GET");
 	    	con.setRequestProperty("Content-Type", "application/json");
-	    	con.setRequestProperty("Authorization", BucketUtilities.KEY);
+	    	con.setRequestProperty("Authorization", GlobalInstance.KEY);
 	    	int status = con.getResponseCode();
 	    	logger.info("server responded with status code " + status);
 	    	StringBuffer content = new StringBuffer();
