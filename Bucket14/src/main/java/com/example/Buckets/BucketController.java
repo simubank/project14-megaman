@@ -38,9 +38,16 @@ public class BucketController {
     public String login(@RequestParam("id") String id){
     	GlobalInstance.global_user = new User(id);
     	JsonObject user = GlobalInstance.global_user.getUserInfo();
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(GlobalInstance.dateTime);
+    	int date = cal.get(Calendar.DAY_OF_MONTH);
+    	int month = cal.get(Calendar.MONTH) + 1;
     	JsonObject response = new JsonObject();
     	response.add("userInfo", user);
     	response.addProperty("serverTime", GlobalInstance.dateTime.toString());
+    	response.addProperty("date", date);
+    	response.addProperty("month", month);
+    	
     	return response.toString();
     }
     
@@ -84,6 +91,7 @@ public class BucketController {
     	GlobalInstance.dateTime = cal.getTime();
     	JsonObject response = new JsonObject();
     	response.addProperty("date", GlobalInstance.dateTime.toString());
+    	GlobalInstance.global_user.endOfDayProcedure();
     	// calculate progresses for challenges
     	if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
     		GlobalInstance.global_user.endOfWeekProcedure();

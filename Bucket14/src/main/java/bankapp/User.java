@@ -22,22 +22,27 @@ public class User {
 	public String first_name;
 	public String last_name;
 	public ArrayList<Challenge> challenges;
+	public ArrayList<Challenge> completedChallenges;
 	public ArrayList<BucketJar> jars;
 	public ArrayList<Account> bank_accounts;
 	public ArrayList<Account> credit_card_accounts;
 	public ArrayList<Challenge> list_of_challenges;
+	public ArrayList<Transaction> todaysTransactions;// new transactions for today
 	public ArrayList<Transaction> curWeekTransactions;// new transactions for this week
-	public ArrayList<Transaction> curMonthTransactions;// new transactions for this week
+	public ArrayList<Transaction> curMonthTransactions;// new transactions for this month
 	public ArrayList<Transaction> transactions;
 
 
 	public User(String login_customer_id) {
 		//set the customer id
+		stars = 0;
 		customer_id = login_customer_id;
 		bank_accounts = new ArrayList<Account>();
 		challenges = new ArrayList<Challenge>();
+		completedChallenges = new ArrayList<Challenge>();
 		transactions = new ArrayList<Transaction>();
 		credit_card_accounts = new ArrayList<Account>();
+		todaysTransactions = new ArrayList<Transaction>();
 		curWeekTransactions = new ArrayList<Transaction>();
 		curMonthTransactions = new ArrayList<Transaction>();
 		jars = new ArrayList<BucketJar>();
@@ -69,9 +74,11 @@ public class User {
 		}
 		
 		
-		
-		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE, (float)1.78);
+		// generate challenges and jars here
+		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 3, 3, Challenge.WEEKLY_CHALLENGE, (float)1.78);
 		challenges.add(coffeeChallenge);
+		Challenge McDsChallenge = new Challenge("MCDONALDS", 7, 3, Challenge.WEEKLY_CHALLENGE, (float)10);
+		challenges.add(McDsChallenge);
 		BucketJar defaultJar = new BucketJar("General Savings", 99999);
 		jars.add(defaultJar);
 	}
@@ -108,9 +115,10 @@ public class User {
 		Transaction transaction = new Transaction(trans);
 		// what should do when a new transaction comes in?
 		// first see the description of the transaction
+		todaysTransactions.add(transaction);
 		curWeekTransactions.add(transaction);
 		curMonthTransactions.add(transaction);
-		String desc = trans.get("description").getAsString();
+		//String desc = trans.get("description").getAsString();
 
 	}
 	
@@ -118,49 +126,80 @@ public class User {
 		
 	}
 	
+	// calculate progression for each challenge 
+	public void endOfDayProcedure() {
+		ArrayList<Challenge> completedToday = new ArrayList<Challenge>(); 
+		for(Challenge ch: challenges) {
+			int transCount = 0;
+			for(Transaction tr: todaysTransactions) {
+				if(tr.description.contains(ch.transaction_desc_key) || 
+					tr.merchantName.contains(ch.transaction_desc_key)) {
+					transCount++;
+					break;
+				}
+			}
+			if(transCount == 0) {
+				int result = ch.advance(1, 0);
+				if(result == 1) {
+					completedToday.add(ch);
+					BucketJar defaultJar = jars.get(0);
+					defaultJar.fillJar(ch.saving_per_unit * ch.goal);
+					stars++;
+					completedChallenges.add(ch);
+				}
+			}
+		}
+		for(Challenge chToRemove: completedToday) {
+			int index = challenges.indexOf(chToRemove);
+			if(index != -1)
+				challenges.remove(index);
+		}
+		todaysTransactions.clear();
+	}
 	// logistics for endofweek or endofmonth procedures:
 	// 1. for each weekly challenge, count progress towards
 	public void endOfWeekProcedure() {
+		challenges.addAll(completedChallenges);
+		completedChallenges.clear();
 		for(Challenge ch: challenges) {
-			if(ch.type != Challenge.WEEKLY_CHALLENGE) continue;
-			int progression = 0;
-			float total_saving = 0;
-			for(Transaction tr: curWeekTransactions) {
-				if(tr.description.contains(ch.transaction_desc_key) || 
-					tr.merchantName.contains(ch.transaction_desc_key)) {
-					progression++;
-					total_saving += tr.currencyAmount;
-				}
+			if(ch.type == Challenge.WEEKLY_CHALLENGE) {
+				ch.reset();
 			}
-			progression = ch.fixed_unit - progression;
-			if(progression <= 0) continue;
-			if(ch.advance(progression, total_saving) != 0) {
-				BucketJar defaultJar = jars.get(0);
-				defaultJar.fillJar(ch.saving_per_unit * progression);
-			}
-			curWeekTransactions.clear();
 		}
+		/*if(ch.type != Challenge.WEEKLY_CHALLENGE) continue;
+		int progression = 0;
+		float total_saving = 0;
+		for(Transaction tr: curWeekTransactions) {
+			if(tr.description.contains(ch.transaction_desc_key) || 
+				tr.merchantName.contains(ch.transaction_desc_key)) {
+				progression++;
+				total_saving += tr.currencyAmount;
+			}
+		}
+		progression = ch.fixed_unit - progression;
+		if(progression <= 0) continue;
+		if(ch.advance(progression, total_saving) != 0) {
+			BucketJar defaultJar = jars.get(0);
+			defaultJar.fillJar(ch.saving_per_unit * progression);
+		}
+		curWeekTransactions.clear();*/
 	}
 	
 	public void endOfMonthProcedure() {
+		ArrayList<Challenge> remaining = new ArrayList<Challenge>();
+		for(Challenge ch: completedChallenges) {
+			if(ch.type == Challenge.MONTHLY_CHALLENGE) {
+				challenges.add(ch);
+			} else {
+				remaining.add(ch);
+			}
+		}
+		completedChallenges.clear();
+		completedChallenges.addAll(remaining);
 		for(Challenge ch: challenges) {
-			if(ch.type != Challenge.WEEKLY_CHALLENGE) continue;
-			int progression = 0;
-			float total_saving = 0;
-			for(Transaction tr: curWeekTransactions) {
-				if(tr.description.contains(ch.transaction_desc_key) || 
-					tr.merchantName.contains(ch.transaction_desc_key)) {
-					progression++;
-					total_saving += tr.currencyAmount;
-				}
+			if(ch.type == Challenge.MONTHLY_CHALLENGE) {
+				ch.reset();
 			}
-			progression = ch.fixed_unit - progression;
-			if(progression <= 0) continue;
-			if(ch.advance(progression, total_saving) != 0) {
-				BucketJar defaultJar = jars.get(0);
-				defaultJar.fillJar(ch.saving_per_unit * progression);
-			}
-			curWeekTransactions.clear();
 		}
 	}
 	

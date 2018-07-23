@@ -49,4 +49,8 @@ public class Challenge {
 		return info;
 	}
 	
+	public void reset() {
+		progress = 0;
+	}
+	
 }

@@ -18,6 +18,10 @@ function login(){
 		jars = user.jars;
 		servertime = obj.serverTime;
 		numStars = user.numStars;
+		window.applicationDate = {
+			date: obj.date,
+			month: obj.month
+		};
 		// step 3: show all the other divs, hide login div
 
 		var elem = document.getElementById('loginDiv');
@@ -181,8 +185,8 @@ function nextDay(){
 	postFromServer("/nextDay");
 }
 
-function postTransaction(){
-	var amount = $('#transActionAmount').val();
+function postTransaction(desc){
+	var amount = 1;
 	if(amount == 0){
 		alert('transaction amount 0');
 		return;
@@ -191,8 +195,8 @@ function postTransaction(){
 	var date = '2018-' + applicationDate.month + '-' + applicationDate.date + 'T00:00:00';
 	var transObj = {
 		type: 'CreditCardTransaction',
-		description: 'TIM HORTONS TEST',
-		merchantName: 'TIM HORTONS',
+		description: desc,
+		merchantName: desc,
 		currencyAmount: amount,
 		postDate: date
 	}
