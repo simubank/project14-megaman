@@ -46,7 +46,7 @@ public class BucketController {
     	return response.toString();
     }
     
-    @GetMapping("/serverTime")
+    @GetMapping("/serverDate")
     public String getServerDate() {
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(GlobalInstance.dateTime);
