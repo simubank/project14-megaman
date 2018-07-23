@@ -1,3 +1,33 @@
-body {
-    background-color: powderblue;
+body{
+	background-color: powderblue;
+}
+
+html{
+
+}
+
+#loginDiv{
+	background-color: powderblue;
+    background-image:  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://www.metoffice.gov.uk/binaries/content/gallery/mohippo/images/migrated-image/r/heavy_rain_splashes_shutterstock_148721882.jpg");
+   	background-size: cover;
+   	font-family: 'Work Sans', sans-serif;
+   	font-size: 25px;
+	text-align: center;
+	padding: 300px 0;
+	height: 100vh;
+}
+
+.textA{
+	color:white;
+	animation-name: fadeIn;
+	animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
