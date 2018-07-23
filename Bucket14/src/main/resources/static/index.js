@@ -118,7 +118,7 @@ function postFromServer(params){
  		data: '',
  		success: function(data){
  			alert(data);
- 			getServerDate();
+ 			
  		},
  		error: function(error){
  			alert(error);
@@ -140,13 +140,14 @@ function newJar(){
 	var name = $('#newJarName').val();
 	var goal = $('#newJarGoal').val();
 	postFromServer('/createJar?name=' + name + '&goal=' + goal);
+	getServerDate();
 }
 
 function getServerDate(){
 	$.get('http://' + location.host + '/serverDate', 
 		function(data){
 			var dateInfo = JSON.parse(data);
-			window.servertime = dateInfo.serverTime;
+			window.servertime = dateInfo.serverTimeStr;
 			window.applicationDate = dateInfo;
 		});
 	updateUserInfo();
@@ -156,6 +157,7 @@ function getServerDate(){
 // working :)
 function nextDay(){
 	postFromServer("/nextDay");
+	getServerDate();
 }
 
 function postTransaction(){
@@ -182,6 +184,7 @@ function postTransaction(){
  		success: updateUserInfo,
   		dataType: "json"
 	});
+	getServerDate();
 }
 
 /*

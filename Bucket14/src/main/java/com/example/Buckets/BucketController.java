@@ -82,6 +82,7 @@ public class BucketController {
     	GlobalInstance.dateTime = cal.getTime();
     	JsonObject response = new JsonObject();
     	response.addProperty("date", GlobalInstance.dateTime.toString());
+    	// calculate progresses for challenges
     	if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
     		GlobalInstance.global_user.endOfWeekProcedure();
     	}
