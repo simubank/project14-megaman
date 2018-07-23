@@ -24,10 +24,12 @@ function login(){
 
 function postFromServer(params){
 
-	$.post( "http://" + location.host + params, function( data ) {
-  		$( "#result" ).html( data );
-  		alert( data );
-	});
+	$.post( "http://" + location.host + params, 
+		function( data ) {
+  			$( "#result" ).html( data );
+  			alert( data );
+		},
+	"application/json; charset=utf-8");
 
 }
 
@@ -51,23 +53,31 @@ function nextDay(){
 
 function postTransaction(amount){
 	//date format: 2018-02-01T00:00:00
-	var date = '2018-' + dateInfo.month + '-' + dateInfo.date + 'T00:00:00';
+	var date = '2018-' + applicationDate.month + '-' + applicationDate.date + 'T00:00:00';
 	var transObj = {
 		type: 'CreditCardTransaction',
 		description: 'TIM HORTONS TEST',
 		merchantName: 'TIM HORTONS',
-		currencyAmount: 1.86,
+		currencyAmount: amount,
 		postDate: date
 	}
 
-	$.post('http://' + location.host + '/makeTransaction1', 
-		transObj, 
-		function(response){
-			alert(response);
-		});
+	$.ajax({
+  		type: "POST",
+  		contentType: "application/json; charset=utf-8",
+  		url: 'http://' + location.host + '/makeTransaction',
+ 		data: JSON.stringify(transObj),
+  		dataType: "json"
+	});
 }
 
 /*
+$.post('http://' + location.host + '/makeTransaction', 
+		transObj, 
+		function(response){
+			alert(response);
+		},
+		"application/json; charset=utf-8");
 function postTimHortonsTransactions(){
 	var trans={
 		accountId: "string",

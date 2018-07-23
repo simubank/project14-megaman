@@ -38,6 +38,8 @@ public class User {
 		list_of_challenges = new ArrayList<Challenge>();
 		transactions = new ArrayList<Transaction>();
 		credit_card_accounts = new ArrayList<Account>();
+		curWeekTransactions = new ArrayList<Transaction>();
+		curMonthTransactions = new ArrayList<Transaction>();
 		
 		// retrieve info for the user from api
 		String infoStr = GlobalInstance.getResult("https://dev.botsfinancial.com/api/customers/" + customer_id);
@@ -105,9 +107,9 @@ public class User {
 			float total_saving = 0;
 			for(Transaction tr: curWeekTransactions) {
 				if(tr.description.contains(ch.transaction_desc_key) || 
-					tr.merchant.contains(ch.transaction_desc_key)) {
+					tr.merchantName.contains(ch.transaction_desc_key)) {
 					progression++;
-					total_saving += tr.amount;
+					total_saving += tr.currencyAmount;
 				}
 			}
 			if(ch.advance(progression, total_saving) != 0) {
@@ -125,9 +127,9 @@ public class User {
 			float total_saving = 0;
 			for(Transaction tr: curMonthTransactions) {
 				if(tr.description.contains(ch.transaction_desc_key) || 
-					tr.merchant.contains(ch.transaction_desc_key)) {
+					tr.merchantName.contains(ch.transaction_desc_key)) {
 					progression++;
-					total_saving += tr.amount;
+					total_saving += tr.currencyAmount;
 				}
 			}
 			if(ch.advance(progression, total_saving) != 0) {
