@@ -6,7 +6,7 @@ var challenges, jars, servertime;
 function login(){
 	var signInId = $("#login").val();
 	var params = "/login?id=" + signInId;
-//					   htttp://localhost:8443/login?id=...
+//					   http://localhost:8443/login?id=...
 	$.get( "http://" + location.host + params, 
 		function( data ) { // {"serverTime":"Sun Jul 22 18:09:57 EDT 2018","userName":"Tommy Bluel","numStars":0,"challenges":"","jars":""}
 		// step1: convert data from string to json
@@ -21,6 +21,32 @@ function login(){
 	});
 
 }
+
+/* this is what userinfo look like
+{
+	"userInfo":{
+		"userName":"Santos Kunter",
+		"numStars":0,
+		"challenges":[
+		{
+			"name":"TIM HORTONS",
+			"goal":6,
+			"fixedUnit":3,
+			"progress":0
+		}
+		],
+		"jars":[
+		{
+			"name":"General Savings",
+			"goal":99999.0,
+			"progress":0.0
+		}
+		]
+	},
+	"serverTime":"Sun Jul 22 23:54:20 EDT 2018"
+}
+
+*/
 
 function postFromServer(params){
 

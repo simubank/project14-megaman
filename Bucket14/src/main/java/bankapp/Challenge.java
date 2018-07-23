@@ -1,5 +1,7 @@
 package bankapp;
 
+import com.google.gson.JsonObject;
+
 public class Challenge {
 	// all challenges work in similar ways: 
 	// if you have less than fixed_unit of merchandise with
@@ -24,6 +26,7 @@ public class Challenge {
 		this.transaction_desc_key = name;
 		//this.saving_per_unit = saving;
 		this.fixed_unit = unit;
+		this.progress = 0;
 	}
 
 	
@@ -37,5 +40,13 @@ public class Challenge {
 		}
 	}
 	
+	public JsonObject getChallengeInfo() {
+		JsonObject info = new JsonObject();
+		info.addProperty("name", transaction_desc_key);
+		info.addProperty("goal", goal);
+		info.addProperty("fixedUnit", fixed_unit);
+		info.addProperty("progress", progress);
+		return info;
+	}
 	
 }

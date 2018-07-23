@@ -68,10 +68,29 @@ public class User {
 			credit_card_accounts.add(acct);
 		}
 		
-		//Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE);
-		//challenges.add(coffeeChallenge);
-		//BucketJar defaultJar = new BucketJar("General Savings", 99999);
-		//jars.add(defaultJar);
+		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE);
+		challenges.add(coffeeChallenge);
+		BucketJar defaultJar = new BucketJar("General Savings", 99999);
+		jars.add(defaultJar);
+	}
+	
+	public JsonObject getUserInfo() {
+		JsonArray chsArray = new JsonArray();
+		for(Challenge ch: challenges) {
+			chsArray.add(ch.getChallengeInfo());
+		}
+		
+		JsonArray jarsArray = new JsonArray();
+		for(BucketJar j: jars) {
+			jarsArray.add(j.getJarInfo());
+		}
+    	JsonObject userInfo = new JsonObject();
+    	userInfo.addProperty("userName", first_name + " " + last_name);;
+    	userInfo.addProperty("numStars", stars);
+    	userInfo.add("challenges", chsArray);;
+    	userInfo.add("jars", jarsArray);
+		
+		return userInfo;
 	}
 	
 	public void fetchUserTransactions() {

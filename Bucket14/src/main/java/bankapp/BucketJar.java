@@ -1,5 +1,7 @@
 package bankapp;
 
+import com.google.gson.JsonObject;
+
 public class BucketJar {
 	// total stands for total value saved, current represents the value currently saved. 
 	public float total;
@@ -21,5 +23,13 @@ public class BucketJar {
 			current += amount;
 			return 0;
 		}
+	}
+	
+	public JsonObject getJarInfo() {
+		JsonObject info = new JsonObject();
+		info.addProperty("name", name);
+		info.addProperty("goal", total);
+		info.addProperty("progress", current);
+		return info;
 	}
 }

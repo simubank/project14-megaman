@@ -37,14 +37,10 @@ public class BucketController {
     @RequestMapping("/login")
     public String login(@RequestParam("id") String id){
     	GlobalInstance.global_user = new User(id);
-    	String challengesStr = "";
-    	String jarStr = "";
+    	JsonObject user = GlobalInstance.global_user.getUserInfo();
     	JsonObject response = new JsonObject();
+    	response.add("userInfo", user);
     	response.addProperty("serverTime", GlobalInstance.dateTime.toString());
-    	response.addProperty("userName", GlobalInstance.global_user.first_name + " " + GlobalInstance.global_user.last_name);;
-    	response.addProperty("numStars", GlobalInstance.global_user.stars);
-    	response.addProperty("challenges", challengesStr);
-    	response.addProperty("jars", jarStr);
     	return response.toString();
     }
     
