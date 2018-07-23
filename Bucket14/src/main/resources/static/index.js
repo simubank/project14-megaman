@@ -33,7 +33,9 @@ function postFromServer(params){
 
 }
 
-function newJar(name, goal){
+function newJar(){
+	var name = $('#newJarName').val();
+	var goal = $('#newJarGoal').val();
 	postFromServer('/createJar?name=' + name + '&goal=' + goal);
 }
 
@@ -52,7 +54,7 @@ function nextDay(){
 }
 
 function postTransaction(){
-	var amount = $('transActionAmount').val();
+	var amount = $('#transActionAmount').val();
 	if(amount == 0){
 		alert('transaction amount 0');
 		return;

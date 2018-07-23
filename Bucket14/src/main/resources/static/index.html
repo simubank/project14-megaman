@@ -14,6 +14,11 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
+<style>
+	div{
+		padding: 10px;
+	}
+</style>
 
 </head>
 <body>
@@ -26,12 +31,12 @@
 
 	</div>
 
-	<div id="infoDiv">
+	<div id="infoDiv" style="display:">
 		<span></span>
 	</div>
 
 	<div id="challangeDiv">
-		<span>Challanges</span>
+		<h2>Challanges</h2>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -53,7 +58,7 @@
 	</div>
 
 	<div id="bucketsDiv">
-		<span>Money Jars</span>
+		<h2>Money Jars</h2>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -73,32 +78,36 @@
 			</tbody>
 		</table>
 		<div>
-			<form>
-				<div class="form-group">
-    				<label for="fromJarName">From Jar</label>
-    				<input type="name" class="form-control" id="fromJarName" placeholder="From Jar Name">
-  				</div>
-  				<div class="form-group">
-    				<label for="toJarName">To Jar</label>
-    				<input type="name" class="form-control" id="toJarName" placeholder="To Jar Name">
-  				</div>
-  				<button type="submit" class="btn btn-default">Transfer</button>
-			</form>
+			<div class="row">
+				<input class="col-md-4" id="newJarName" placeholder="jar name" />
+				<input class="col-md-4" id="newJarGoal" placeholder="jar goal (amount)" />
+				<button class="btn btn-default" onclick="newJar()"> new jar </button>
+			</div>
+			<div class="row">
+    			<label class="col-md-4">From Jar</label>
+    			<input class="col-md-8" type="name" class="form-control" id="fromJarName" placeholder="From Jar Name">
+  			</div>
+  			<div class="row">
+    			<label class="col-md-4">To Jar</label>
+    			<input class="col-md-8" type="name" class="form-control" id="toJarName" placeholder="To Jar Name">
+  			</div>
+  			<button class="btn btn-default">Transfer</button>
 		</div>
 	</div>
 
 	<div id="starsDiv">
-		<span>Stars Collected</span>
+		<h2>Stars Collected</h2>
 	</div>
 
 	<div id="testDiv">
-		<form>
-			<button class="btn btn-default" onclick="nextday()">nextday</button>
-			<div class="form-group">
-				<input type="text" class="form-control" id="transActionAmount" value="0" placeholder="0.00">
-				<button class="btn btn-default" onclick="postTransaction()">Buy Coffee</button>
+		<h2> Testing functions </h2>
+		<div>
+			<button class="btn btn-default" onclick="nextDay()">nextday</button>
+			<div class="row">
+				<input class="col-md-8" type="text" id="transActionAmount" value="0" placeholder="0.00">
+				<button class="btn col-md-1 btn-default" onclick="postTransaction()">Buy Coffee</button>
 			</div>
 			<button class="btn btn-default" onclick="getServerDate()">update Date From Server</button>
-		</form>
+		</div>
 </body>
 </html>

@@ -35,11 +35,12 @@ public class User {
 		//set the customer id
 		customer_id = login_customer_id;
 		bank_accounts = new ArrayList<Account>();
-		list_of_challenges = new ArrayList<Challenge>();
+		challenges = new ArrayList<Challenge>();
 		transactions = new ArrayList<Transaction>();
 		credit_card_accounts = new ArrayList<Account>();
 		curWeekTransactions = new ArrayList<Transaction>();
 		curMonthTransactions = new ArrayList<Transaction>();
+		jars = new ArrayList<BucketJar>();
 		
 		// retrieve info for the user from api
 		String infoStr = GlobalInstance.getResult("https://dev.botsfinancial.com/api/customers/" + customer_id);
@@ -89,9 +90,7 @@ public class User {
 		curWeekTransactions.add(transaction);
 		curMonthTransactions.add(transaction);
 		String desc = trans.get("description").getAsString();
-		if(desc.contains("TIM HORTONS")) {
-			
-		}
+
 	}
 	
 	public void newChallenge() {
@@ -139,6 +138,10 @@ public class User {
 			curMonthTransactions.clear();
 		}
 	}
+	
+	/*public void transferFromJar(String from, String to, amount) {
+		for()
+	}*/
 
 }
 
