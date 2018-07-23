@@ -31,12 +31,13 @@
 
 	</div>
 
-	<div id="infoDiv" style="display:none">
-		<span></span>
-	</div>
+
 
 	<div id="home_page_hidden" style="display:none">
 
+	<div id="infoDiv" >
+		<h3></h3>
+	</div>
 
 	<div id="challangeDiv">
 		<h2>Challanges</h2>
@@ -86,7 +87,7 @@
 				<input class="col-md-4" id="newJarGoal" placeholder="jar goal (amount)" />
 				<button class="btn btn-default" onclick="newJar()"> new jar </button>
 			</div>
-			<div class="row">
+			<!--<div class="row">
     			<label class="col-md-4">From Jar</label>
     			<input class="col-md-8" type="name" class="form-control" id="fromJarName" placeholder="From Jar Name">
   			</div>
@@ -94,7 +95,7 @@
     			<label class="col-md-4">To Jar</label>
     			<input class="col-md-8" type="name" class="form-control" id="toJarName" placeholder="To Jar Name">
   			</div>
-  			<button class="btn btn-default">Transfer</button>
+  			<button class="btn btn-default">Transfer</button>-->
 		</div>
 	</div>
 
@@ -107,7 +108,7 @@
 		<div>
 			<button class="btn btn-default" onclick="nextDay()">nextday</button>
 			<div class="row">
-				<input class="col-md-8" type="text" id="transActionAmount" value="0" placeholder="0.00">
+				<input class="col-md-2" type="text" id="transActionAmount" value="0" placeholder="0.00">
 				<button class="btn col-md-1 btn-default" onclick="postTransaction()">Buy Coffee</button>
 			</div>
 			<button class="btn btn-default" onclick="getServerDate()">update Date From Server</button>

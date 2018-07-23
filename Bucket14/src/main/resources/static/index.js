@@ -12,11 +12,12 @@ function login(){
 		// step1: convert data from string to json
 		var obj = JSON.parse(data);
 		// step2: fill global variables with user info
-		username = obj.userName;
-		challenges = obj.challenges;
-		jars = obj.jars;
+		var user = obj.userInfo
+		username = user.userName;
+		challenges = user.challenges;
+		jars = user.jars;
 		servertime = obj.serverTime;
-		numstars = obj.numStars;
+		numStars = user.numStars;
 		// step 3: show all the other divs, hide login div
 
 		var elem = document.getElementById('loginDiv');
@@ -26,8 +27,10 @@ function login(){
 		elem.style.display = ''; // show
 
 
+
+		loadUserInfo();
   		//$( "#result" ).html( data );
-  		alert( "Load was performed." );
+  		//alert( "Load was performed." );
 	});
 
 }
@@ -58,14 +61,78 @@ function login(){
 
 */
 
+// 
+function updateUserInfo(){
+	$.get( "http://" + location.host + "/userInfo", 
+		function( data ) { // {"serverTime":"Sun Jul 22 18:09:57 EDT 2018","userName":"Tommy Bluel","numStars":0,"challenges":"","jars":""}
+		// step1: convert data from string to json
+		var obj = JSON.parse(data);
+		username = obj.userName;
+		numStars = obj.numStars;
+		challenges = obj.challenges;
+		jars = obj.jars;
+	});
+	loadUserInfo();
+}
+
+function loadUserInfo(){
+	// username & stars
+	$('#infoDiv h3').html('User Name: ' + username + ' Number of stars: ' + numStars + ' Date: ' + servertime);
+	// challenges inner html
+	var challengesHTML = "";
+	for(var i = 0; i < challenges.length; i++){
+		var challenge = challenges[i];
+		var progressPct = (challenge.progress / challenge.goal * 100).toFixed(2);
+		var challengeHTML = 
+		'<tr>' +
+			'<td>' + challenge.name + '</td>' + 
+			'<td>' + challenge.goal + '</td>' + 
+			'<td>' + progressPct + '%</td>' + 
+		'</tr>';
+		challengesHTML = challengesHTML + challengeHTML;
+	}
+	$('#challangeDiv table tbody').html(challengesHTML);
+	// jars HTML
+	var jarsHTML = "";
+	for(var i = 0; i < jars.length; i++){
+		var jar = jars[i];
+		var progressPct = (jar.progress / jar.goal * 100).toFixed(2);
+		var jarHTML = 
+		'<tr>' +
+			'<td>' + jar.name + '</td>' + 
+			'<td>' + jar.goal + '</td>' + 
+			'<td>' + progressPct + '%</td>' + 
+		'</tr>';
+		jarsHTML = jarsHTML + jarHTML;
+	}
+	$('#bucketsDiv table tbody').html(jarsHTML);
+
+}
+
 function postFromServer(params){
 
-	$.post( "http://" + location.host + params, 
+	$.ajax({
+  		type: "POST",
+  		contentType: "application/json; charset=utf-8",
+  		url: 'http://' + location.host + params,
+ 		data: '',
+ 		success: function(data){
+ 			alert(data);
+ 			getServerDate();
+ 		},
+ 		error: function(error){
+ 			alert(error);
+ 		},
+  		dataType: "json"
+	});
+
+	/*$.post( "http://" + location.host + params, 
 		function( data ) {
   			$( "#result" ).html( data );
   			alert( data );
+			updateUserInfo();
 		},
-	"application/json; charset=utf-8");
+	"application/json; charset=utf-8");*/
 
 }
 
@@ -79,8 +146,10 @@ function getServerDate(){
 	$.get('http://' + location.host + '/serverDate', 
 		function(data){
 			var dateInfo = JSON.parse(data);
+			window.servertime = dateInfo.serverTime;
 			window.applicationDate = dateInfo;
-		})
+		});
+	updateUserInfo();
 }
 // ------------------------------- test functions ---------------------------------------------
 
@@ -110,6 +179,7 @@ function postTransaction(){
   		contentType: "application/json; charset=utf-8",
   		url: 'http://' + location.host + '/makeTransaction',
  		data: JSON.stringify(transObj),
+ 		success: updateUserInfo,
   		dataType: "json"
 	});
 }

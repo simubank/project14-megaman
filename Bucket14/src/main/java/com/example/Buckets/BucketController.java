@@ -52,8 +52,15 @@ public class BucketController {
     	// january is 1, feb. is 2, etc.
     	int month = cal.get(Calendar.MONTH) + 1;
     	JsonObject response = new JsonObject();
+    	response.addProperty("serverTimeStr", GlobalInstance.dateTime.toString());
     	response.addProperty("date", date);
     	response.addProperty("month", month);
+    	return response.toString();
+    }
+    
+    @GetMapping("/userInfo")
+    public String getUserInfo() {
+    	JsonObject response = GlobalInstance.global_user.getUserInfo();
     	return response.toString();
     }
     

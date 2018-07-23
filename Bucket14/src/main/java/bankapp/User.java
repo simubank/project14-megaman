@@ -59,7 +59,7 @@ public class User {
 			Account acct = new Account(acctNum);
 			bank_accounts.add(acct);
 		}
-		// credit accounts info
+		// credit accounts info & gets user's average cost on certain item
 		JsonArray creditAccounts = userInfo.get("maskedRelatedCreditCardAccounts")
 				.getAsJsonObject().get("authorized").getAsJsonArray();
 		for(JsonElement acctElement: creditAccounts) {
@@ -68,7 +68,9 @@ public class User {
 			credit_card_accounts.add(acct);
 		}
 		
-		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE);
+		
+		
+		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE, (float)1.78);
 		challenges.add(coffeeChallenge);
 		BucketJar defaultJar = new BucketJar("General Savings", 99999);
 		jars.add(defaultJar);
@@ -130,9 +132,11 @@ public class User {
 					total_saving += tr.currencyAmount;
 				}
 			}
+			progression = ch.fixed_unit - progression;
+			if(progression <= 0) continue;
 			if(ch.advance(progression, total_saving) != 0) {
 				BucketJar defaultJar = jars.get(0);
-				defaultJar.fillJar(ch.saving_accumulated);
+				defaultJar.fillJar(ch.saving_per_unit * progression);
 			}
 			curWeekTransactions.clear();
 		}
@@ -143,18 +147,20 @@ public class User {
 			if(ch.type != Challenge.WEEKLY_CHALLENGE) continue;
 			int progression = 0;
 			float total_saving = 0;
-			for(Transaction tr: curMonthTransactions) {
+			for(Transaction tr: curWeekTransactions) {
 				if(tr.description.contains(ch.transaction_desc_key) || 
 					tr.merchantName.contains(ch.transaction_desc_key)) {
 					progression++;
 					total_saving += tr.currencyAmount;
 				}
 			}
+			progression = ch.fixed_unit - progression;
+			if(progression <= 0) continue;
 			if(ch.advance(progression, total_saving) != 0) {
 				BucketJar defaultJar = jars.get(0);
-				defaultJar.fillJar(ch.saving_accumulated);
+				defaultJar.fillJar(ch.saving_per_unit * progression);
 			}
-			curMonthTransactions.clear();
+			curWeekTransactions.clear();
 		}
 	}
 	

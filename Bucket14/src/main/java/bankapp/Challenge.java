@@ -14,17 +14,17 @@ public class Challenge {
 	public final int goal;
 	public final int fixed_unit;
 	public final String transaction_desc_key;
-	public float saving_accumulated = 0;
+	public float saving_per_unit;
 	public final int type;
 	
 	public final static int WEEKLY_CHALLENGE = 0;
 	public final static int MONTHLY_CHALLENGE = 1;
 	
-	public Challenge(String name, int goal, int unit, int type) {
+	public Challenge(String name, int goal, int unit, int type, float saving) {
 		this.type = type;
 		this.goal = goal;
 		this.transaction_desc_key = name;
-		//this.saving_per_unit = saving;
+		this.saving_per_unit = saving;
 		this.fixed_unit = unit;
 		this.progress = 0;
 	}
