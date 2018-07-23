@@ -6,6 +6,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="index.js"></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -18,18 +26,79 @@
 
 	</div>
 
+	<div id="infoDiv">
+		<span></span>
+	</div>
+
 	<div id="challangeDiv">
 		<span>Challanges</span>
-		<span id="challenges"></span> 
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						Challenge Name
+					</th>
+					<th>
+						Goal
+					</th>
+					<th>
+						Progress
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
 	</div>
 
 	<div id="bucketsDiv">
 		<span>Money Jars</span>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						Jar Name
+					</th>
+					<th>
+						Goal
+					</th>
+					<th>
+						Progress
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<div>
+			<form>
+				<div class="form-group">
+    				<label for="fromJarName">From Jar</label>
+    				<input type="name" class="form-control" id="fromJarName" placeholder="From Jar Name">
+  				</div>
+  				<div class="form-group">
+    				<label for="toJarName">To Jar</label>
+    				<input type="name" class="form-control" id="toJarName" placeholder="To Jar Name">
+  				</div>
+  				<button type="submit" class="btn btn-default">Transfer</button>
+			</form>
+		</div>
 	</div>
 
 	<div id="starsDiv">
 		<span>Stars Collected</span>
 	</div>
-	
+
+	<div id="testDiv">
+		<form>
+			<button class="btn btn-default" onclick="nextday()">nextday</button>
+			<div class="form-group">
+				<input type="text" class="form-control" id="transActionAmount" value="0" placeholder="0.00">
+				<button class="btn btn-default" onclick="postTransaction()">Buy Coffee</button>
+			</div>
+			<button class="btn btn-default" onclick="getServerDate()">update Date From Server</button>
+		</form>
 </body>
 </html>

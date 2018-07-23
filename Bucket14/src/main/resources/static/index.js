@@ -51,7 +51,12 @@ function nextDay(){
 	postFromServer("/nextDay");
 }
 
-function postTransaction(amount){
+function postTransaction(){
+	var amount = $('transActionAmount').val();
+	if(amount == 0){
+		alert('transaction amount 0');
+		return;
+	}
 	//date format: 2018-02-01T00:00:00
 	var date = '2018-' + applicationDate.month + '-' + applicationDate.date + 'T00:00:00';
 	var transObj = {
