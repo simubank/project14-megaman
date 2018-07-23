@@ -68,7 +68,9 @@ public class BucketController {
     public String createNewJar(@RequestParam("name") String name, @RequestParam("goal") int goal) {
     	BucketJar newJar = new BucketJar(name, (float)goal);
     	GlobalInstance.global_user.jars.add(newJar);
-    	return "success";
+    	JsonObject response = new JsonObject();
+    	response.addProperty("result", "success");
+    	return response.toString();
     }
     
     //-----------------------------------testing endpoints -----------------------------------

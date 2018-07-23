@@ -29,6 +29,7 @@ function login(){
 
 
 		loadUserInfo();
+		loadDate();
   		//$( "#result" ).html( data );
   		//alert( "Load was performed." );
 	});
@@ -65,19 +66,29 @@ function login(){
 function updateUserInfo(){
 	$.get( "http://" + location.host + "/userInfo", 
 		function( data ) { // {"serverTime":"Sun Jul 22 18:09:57 EDT 2018","userName":"Tommy Bluel","numStars":0,"challenges":"","jars":""}
-		// step1: convert data from string to json
-		var obj = JSON.parse(data);
-		username = obj.userName;
-		numStars = obj.numStars;
-		challenges = obj.challenges;
-		jars = obj.jars;
-	});
-	loadUserInfo();
+			// step1: convert data from string to json
+			var obj = JSON.parse(data);
+			username = obj.userName;
+			numStars = obj.numStars;
+			challenges = obj.challenges;
+			jars = obj.jars;
+			loadUserInfo();
+		});
+
+	$.get('http://' + location.host + '/serverDate', 
+		function(data){
+			var dateInfo = JSON.parse(data);
+			window.servertime = dateInfo.serverTimeStr;
+			window.applicationDate = dateInfo;
+
+			loadDate();
+		});
+
 }
 
 function loadUserInfo(){
 	// username & stars
-	$('#infoDiv h3').html('User Name: ' + username + ' Number of stars: ' + numStars + ' Date: ' + servertime);
+	$('#infoDiv h3').html('User Name: ' + username + ' Number of stars: ' + numStars );
 	// challenges inner html
 	var challengesHTML = "";
 	for(var i = 0; i < challenges.length; i++){
@@ -109,6 +120,20 @@ function loadUserInfo(){
 
 }
 
+function loadDate(){
+	var dateStr = 'Date: ' + servertime;
+	$('#dateTime h3').html(dateStr);
+}
+
+function callBackAndUpdate(data){
+	console.log(JSON.stringify(data));
+	updateUserInfo();
+}
+
+function callBack(data){
+
+}
+
 function postFromServer(params){
 
 	$.ajax({
@@ -116,10 +141,7 @@ function postFromServer(params){
   		contentType: "application/json; charset=utf-8",
   		url: 'http://' + location.host + params,
  		data: '',
- 		success: function(data){
- 			alert(data);
- 			
- 		},
+ 		success: callBackAndUpdate,
  		error: function(error){
  			alert(error);
  		},
@@ -140,7 +162,6 @@ function newJar(){
 	var name = $('#newJarName').val();
 	var goal = $('#newJarGoal').val();
 	postFromServer('/createJar?name=' + name + '&goal=' + goal);
-	getServerDate();
 }
 
 function getServerDate(){
@@ -149,15 +170,15 @@ function getServerDate(){
 			var dateInfo = JSON.parse(data);
 			window.servertime = dateInfo.serverTimeStr;
 			window.applicationDate = dateInfo;
+
+			loadDate();
 		});
-	updateUserInfo();
 }
 // ------------------------------- test functions ---------------------------------------------
 
 // working :)
 function nextDay(){
 	postFromServer("/nextDay");
-	getServerDate();
 }
 
 function postTransaction(){
@@ -181,10 +202,9 @@ function postTransaction(){
   		contentType: "application/json; charset=utf-8",
   		url: 'http://' + location.host + '/makeTransaction',
  		data: JSON.stringify(transObj),
- 		success: updateUserInfo,
+ 		success: callBackAndUpdate,
   		dataType: "json"
 	});
-	getServerDate();
 }
 
 /*
