@@ -35,8 +35,8 @@ function newJar(name, goal){
 	postFromServer('/createJar?name=' + name + '&goal=' + goal);
 }
 
-function getServerTime(){
-	$.get('http://' + location.host + '/serverTime', 
+function getServerDate(){
+	$.get('http://' + location.host + '/serverDate', 
 		function(data){
 			var dateInfo = JSON.parse(data);
 			window.applicationDate = dateInfo;
@@ -44,6 +44,7 @@ function getServerTime(){
 }
 // ------------------------------- test functions ---------------------------------------------
 
+// working :)
 function nextDay(){
 	postFromServer("/nextDay");
 }
@@ -59,7 +60,7 @@ function postTransaction(amount){
 		postDate: date
 	}
 
-	$.post('http://' + location.host + '/serverDate', 
+	$.post('http://' + location.host + '/makeTransaction1', 
 		transObj, 
 		function(response){
 			alert(response);
