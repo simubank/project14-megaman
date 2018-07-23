@@ -14,7 +14,17 @@ function login(){
 		// step2: fill global variables with user info
 		username = obj.userName;
 		challenges = obj.challenges;
+		jars = obj.jars;
+		servertime = obj.serverTime;
+		numstars = obj.numStars;
 		// step 3: show all the other divs, hide login div
+
+		var elem = document.getElementById('loginDiv');
+		elem.style.display = 'none'; // hide
+
+		var elem = document.getElementById('home_page_hidden');
+		elem.style.display = ''; // show
+
 
   		//$( "#result" ).html( data );
   		alert( "Load was performed." );
