@@ -48,6 +48,11 @@ public class BucketController {
     	response.addProperty("date", date);
     	response.addProperty("month", month);
     	
+    	if (GlobalInstance.global_user.first_name == null) {
+    		response.addProperty("success", false);
+    	} else {
+    		response.addProperty("success", true);
+    	}
     	return response.toString();
     }
     

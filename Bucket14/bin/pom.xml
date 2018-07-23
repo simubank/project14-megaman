@@ -31,6 +31,11 @@
             <scope>test</scope>
         </dependency>
         <!-- end::tests[] -->
+        <dependency>
+  			<groupId>com.google.code.gson</groupId>
+  			<artifactId>gson</artifactId>
+  			<version>2.8.5</version>
+		</dependency>
     </dependencies>
 
     <properties>
@@ -55,6 +60,20 @@
                 </executions>
             </plugin>
         </plugins>
+        
+        <resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>banner.txt</include>
+				</includes>
+			</resource>
+		</resources>
     </build>
 
 </project>

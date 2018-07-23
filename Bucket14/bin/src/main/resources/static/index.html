@@ -8,18 +8,11 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<!-- Optional theme   /style.css -->
+<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<!-- style sheey for index.html-->
-<link rel="stylesheet" href="index.css">
-
-<style>
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
-</style>
 
 <style>
 	div{
@@ -31,19 +24,20 @@
 <body>
 
 	<div id="loginDiv">
-		<span class= "textA">User ID: </span>
+		<span>Log In </span>
 		<input id="login" /> 
-		<button onclick="login()" class="btn btn-info btn-lg">sign in</button>
+		<button onclick="login()">sign in</button>
 		<div id="result"></div>
+
 	</div>
+
 
 
 	<div id="home_page_hidden" style="display:none">
 
-	<div id="infoDiv">
+	<div id="infoDiv" >
 		<h3></h3>
 	</div>
-	<div id="dateTime"><h3></h3></div>
 
 	<div id="challangeDiv">
 		<h2>Challenges</h2>
@@ -114,8 +108,8 @@
 		<div>
 			<button class="btn btn-default" onclick="nextDay()">nextday</button>
 			<div class="row">
-				<button class="btn col-md-1 btn-default" onclick="postTransaction('TIM HORTONS')">Buy Coffee</button>
-				<button class="btn col-md-1 btn-default" onclick="postTransaction('MCDONALDS')">Buy McD's</button>
+				<input class="col-md-2" type="text" id="transActionAmount" value="0" placeholder="0.00">
+				<button class="btn col-md-1 btn-default" onclick="postTransaction()">Buy Coffee</button>
 			</div>
 			<button class="btn btn-default" onclick="getServerDate()">update Date From Server</button>
 		</div>
