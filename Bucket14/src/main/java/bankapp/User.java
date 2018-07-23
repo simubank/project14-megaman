@@ -1,15 +1,19 @@
 package bankapp;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.Buckets.Bucket14Application;
+import com.example.Buckets.BucketController;
 import com.example.Buckets.GlobalInstance;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -30,6 +34,8 @@ public class User {
 	public ArrayList<Transaction> curMonthTransactions;// new transactions for this week
 	public ArrayList<Transaction> transactions;
 
+    protected static Logger logger = Logger.getLogger(User.class);
+
 
 	public User(String login_customer_id) {
 		//set the customer id
@@ -46,6 +52,12 @@ public class User {
 		String infoStr = GlobalInstance.getResult("https://dev.botsfinancial.com/api/customers/" + customer_id);
 		JsonParser parser = new JsonParser();
 		JsonElement ele = parser.parse(infoStr);
+		
+		if (ele.isJsonNull()) {
+			first_name = null;
+			logger.error("Incorrect credentials");
+		} else {
+		
 		JsonObject userInfo = ele.getAsJsonObject().get("result").getAsJsonArray().get(0).getAsJsonObject();
 		// get name info
 		first_name = userInfo.get("givenName").getAsString();
@@ -74,7 +86,9 @@ public class User {
 		challenges.add(coffeeChallenge);
 		BucketJar defaultJar = new BucketJar("General Savings", 99999);
 		jars.add(defaultJar);
+		}
 	}
+		
 	
 	public JsonObject getUserInfo() {
 		JsonArray chsArray = new JsonArray();

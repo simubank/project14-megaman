@@ -41,6 +41,11 @@ public class BucketController {
     	JsonObject response = new JsonObject();
     	response.add("userInfo", user);
     	response.addProperty("serverTime", GlobalInstance.dateTime.toString());
+    	if (GlobalInstance.global_user.first_name == null) {
+    	response.addProperty("success", false);
+    	} else {
+        response.addProperty("success", true);
+    	}
     	return response.toString();
     }
     

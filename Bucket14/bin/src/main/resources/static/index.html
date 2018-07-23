@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="index.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+	div{
+		padding: 10px;
+	}
+</style>
+
+</head>
+<body>
+
+	<div id="loginDiv">
+		<span>Log In </span>
+		<input id="login" /> 
+		<button onclick="login()">sign in</button>
+		<div id="result"></div>
+
+	</div>
+
+
+
+	<div id="home_page_hidden" style="display:none">
+
+	<div id="infoDiv" >
+		<h3></h3>
+	</div>
+
+	<div id="challangeDiv">
+		<h2>Challenges</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						Challenge Names
+					</th>
+					<th>
+						Goal
+					</th>
+					<th>
+						Progress
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+	</div>
+
+	<div id="bucketsDiv">
+		<h2>Money Jars</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						Jar Name
+					</th>
+					<th>
+						Goal
+					</th>
+					<th>
+						Progress
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<div>
+			<div class="row">
+				<input class="col-md-4" id="newJarName" placeholder="jar name" />
+				<input class="col-md-4" id="newJarGoal" placeholder="jar goal (amount)" />
+				<button class="btn btn-default" onclick="newJar()"> new jar </button>
+			</div>
+			<!--<div class="row">
+    			<label class="col-md-4">From Jar</label>
+    			<input class="col-md-8" type="name" class="form-control" id="fromJarName" placeholder="From Jar Name">
+  			</div>
+  			<div class="row">
+    			<label class="col-md-4">To Jar</label>
+    			<input class="col-md-8" type="name" class="form-control" id="toJarName" placeholder="To Jar Name">
+  			</div>
+  			<button class="btn btn-default">Transfer</button>-->
+		</div>
+	</div>
+
+	<div id="starsDiv">
+		<h2>Stars Collected</h2>
+	</div>
+
+	<div id="testDiv">
+		<h2> Testing functions </h2>
+		<div>
+			<button class="btn btn-default" onclick="nextDay()">nextday</button>
+			<div class="row">
+				<input class="col-md-2" type="text" id="transActionAmount" value="0" placeholder="0.00">
+				<button class="btn col-md-1 btn-default" onclick="postTransaction()">Buy Coffee</button>
+			</div>
+			<button class="btn btn-default" onclick="getServerDate()">update Date From Server</button>
+		</div>
+	</div>
+</body>
+</html>
