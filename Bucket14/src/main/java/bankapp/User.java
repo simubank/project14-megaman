@@ -65,10 +65,10 @@ public class User {
 			credit_card_accounts.add(acct);
 		}
 		
-		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE);
-		challenges.add(coffeeChallenge);
-		BucketJar defaultJar = new BucketJar("General Savings", 99999);
-		jars.add(defaultJar);
+		//Challenge coffeeChallenge = new Challenge("TIM HORTONS", 6, 3, Challenge.WEEKLY_CHALLENGE);
+		//challenges.add(coffeeChallenge);
+		//BucketJar defaultJar = new BucketJar("General Savings", 99999);
+		//jars.add(defaultJar);
 	}
 	
 	public void fetchUserTransactions() {

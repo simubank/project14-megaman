@@ -12,12 +12,12 @@ function login(){
 		// step1: convert data from string to json
 		var obj = JSON.parse(data);
 		// step2: fill global variables with user info
-		username = obj.username;
+		username = obj.userName;
 		challenges = obj.challenges;
 		// step 3: show all the other divs, hide login div
 
   		//$( "#result" ).html( data );
-  		//alert( "Load was performed." );
+  		alert( "Load was performed." );
 	});
 
 }

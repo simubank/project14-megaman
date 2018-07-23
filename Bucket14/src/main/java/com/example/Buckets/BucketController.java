@@ -108,10 +108,10 @@ public class BucketController {
     	return id;
     }
     
-	@RequestMapping("/")
+	/*@RequestMapping("/")
     public String index() {
         return "Greetings from Spring Boot!";
-    }
+    }*/
     
     @GetMapping("/test1")
     public String test1() {
