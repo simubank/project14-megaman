@@ -109,6 +109,7 @@ function loadUserInfo(){
 			'<td>' + challenge.name + '</td>' + 
 			'<td>' + challenge.goal + '</td>' + 
 			'<td>' + progressPct + '%</td>' + 
+			'<td>' + challenge.progress + '</td>' + 
 		'</tr>';
 		challengesHTML = challengesHTML + challengeHTML;
 	}
