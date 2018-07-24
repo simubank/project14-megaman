@@ -159,8 +159,16 @@ public class User {
 					completedChallenges.add(ch);
 				}
 				if(jars.size() > 0) {
-					BucketJar defaultJar = jars.get(0);
-					defaultJar.fillJar(ch.saving_per_unit);
+					BucketJar defaultJar = null;
+					for(int i = 0; i < jars.size(); i++) {
+						if(!jars.get(i).isFull()) {
+							defaultJar = jars.get(i);
+							break;
+						}
+					}
+					if(defaultJar != null) {
+						defaultJar.fillJar(ch.saving_per_unit);
+					}
 				}
 			}
 		}

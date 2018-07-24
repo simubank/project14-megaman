@@ -32,4 +32,8 @@ public class BucketJar {
 		info.addProperty("progress", current);
 		return info;
 	}
+
+	public boolean isFull() {
+		return current >= total;
+	}
 }
