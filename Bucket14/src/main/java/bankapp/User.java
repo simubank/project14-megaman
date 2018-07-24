@@ -63,36 +63,36 @@ public class User {
 			logger.error("Incorrect credentials");
 		} else {
 		
-		JsonObject userInfo = ele.getAsJsonObject().get("result").getAsJsonArray().get(0).getAsJsonObject();
-		// get name info
-		first_name = userInfo.get("givenName").getAsString();
-		last_name = userInfo.get("surname").getAsString();
-		
-		//account info
-		JsonArray individualAccounts = userInfo.get("maskedRelatedBankAccounts")
-				.getAsJsonObject().get("individual").getAsJsonArray();
-		for(JsonElement acctElement: individualAccounts) {
-			String acctNum = acctElement.getAsJsonObject().get("accountId").getAsString();
-			Account acct = new Account(acctNum);
-			bank_accounts.add(acct);
-		}
-		// credit accounts info & gets user's average cost on certain item
-		JsonArray creditAccounts = userInfo.get("maskedRelatedCreditCardAccounts")
-				.getAsJsonObject().get("authorized").getAsJsonArray();
-		for(JsonElement acctElement: creditAccounts) {
-			String acctNum = acctElement.getAsJsonObject().get("accountId").getAsString();
-			Account acct = new Account(acctNum);
-			credit_card_accounts.add(acct);
-		}
-		
-		
-		// generate challenges and jars here
-		Challenge coffeeChallenge = new Challenge("TIM HORTONS", 3, 3, Challenge.WEEKLY_CHALLENGE, (float)1.78);
-		challenges.add(coffeeChallenge);
-		Challenge McDsChallenge = new Challenge("MCDONALDS", 7, 3, Challenge.WEEKLY_CHALLENGE, (float)10);
-		challenges.add(McDsChallenge);
-		BucketJar defaultJar = new BucketJar("General Savings", 90000);
-		jars.add(defaultJar);
+			JsonObject userInfo = ele.getAsJsonObject().get("result").getAsJsonArray().get(0).getAsJsonObject();
+			// get name info
+			first_name = userInfo.get("givenName").getAsString();
+			last_name = userInfo.get("surname").getAsString();
+			
+			//account info
+			JsonArray individualAccounts = userInfo.get("maskedRelatedBankAccounts")
+					.getAsJsonObject().get("individual").getAsJsonArray();
+			for(JsonElement acctElement: individualAccounts) {
+				String acctNum = acctElement.getAsJsonObject().get("accountId").getAsString();
+				Account acct = new Account(acctNum);
+				bank_accounts.add(acct);
+			}
+			// credit accounts info & gets user's average cost on certain item
+			JsonArray creditAccounts = userInfo.get("maskedRelatedCreditCardAccounts")
+					.getAsJsonObject().get("authorized").getAsJsonArray();
+			for(JsonElement acctElement: creditAccounts) {
+				String acctNum = acctElement.getAsJsonObject().get("accountId").getAsString();
+				Account acct = new Account(acctNum);
+				credit_card_accounts.add(acct);
+			}
+			
+			
+			// generate challenges and jars here
+			Challenge coffeeChallenge = new Challenge("TIM HORTONS", 3, 3, Challenge.WEEKLY_CHALLENGE, (float)1.78);
+			challenges.add(coffeeChallenge);
+			Challenge McDsChallenge = new Challenge("MCDONALDS", 7, 3, Challenge.WEEKLY_CHALLENGE, (float)10);
+			challenges.add(McDsChallenge);
+			//BucketJar defaultJar = new BucketJar("General Savings", 90000);
+			//jars.add(defaultJar);
 		}
 	}
 		
