@@ -98,7 +98,7 @@ function updateUserInfo(){
 
 function loadUserInfo(){
 	// username & stars
-	$('#infoDiv h3').html('User Name: ' + username + ' Number of Stars: ' + numStars );
+	$('#infoDiv h2').html('User Name: ' + username + '<br>'+'<br>'+ ' Number of stars: ' + numStars );
 	// challenges inner html
 	var challengesHTML = "";
 	for(var i = 0; i < challenges.length; i++){
@@ -133,7 +133,7 @@ function loadUserInfo(){
 
 function loadDate(){
 	var dateStr = 'Date: ' + servertime;
-	$('#dateTime h3').html(dateStr);
+	$('#dateTime h4').html(dateStr);
 }
 
 function callBackAndUpdate(data){
