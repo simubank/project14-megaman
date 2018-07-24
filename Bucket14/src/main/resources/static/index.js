@@ -98,7 +98,7 @@ function updateUserInfo(){
 
 function loadUserInfo(){
 	// username & stars
-	$('#infoDiv h2').html('User Name: ' + username + '<br>'+'<br>'+ ' Number of stars: ' + numStars );
+	$('#infoDiv h2').html('User Name: ' + username + '<br>'+'<br>'+ ' Number of Stars: ' + numStars );
 	// challenges inner html
 	var challengesHTML = "";
 	for(var i = 0; i < challenges.length; i++){
