@@ -12,6 +12,7 @@ html{
     background-size: auto;
 	font-family: 'Work Sans', sans-serif;
 	font-size: 25px;
+	height: 100vh;
 }
 
 #loginDiv{

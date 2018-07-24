@@ -62,7 +62,6 @@ public class User {
 			first_name = null;
 			logger.error("Incorrect credentials");
 		} else {
-		
 			JsonObject userInfo = ele.getAsJsonObject().get("result").getAsJsonArray().get(0).getAsJsonObject();
 			// get name info
 			first_name = userInfo.get("givenName").getAsString();
