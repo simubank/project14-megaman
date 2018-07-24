@@ -156,10 +156,12 @@ public class User {
 				int result = ch.advance(1, 0);
 				if(result == 1) {
 					completedToday.add(ch);
-					BucketJar defaultJar = jars.get(0);
-					defaultJar.fillJar(ch.saving_per_unit * ch.goal);
 					stars++;
 					completedChallenges.add(ch);
+				}
+				if(jars.size() > 0) {
+					BucketJar defaultJar = jars.get(0);
+					defaultJar.fillJar(ch.saving_per_unit);
 				}
 			}
 		}
