@@ -124,6 +124,7 @@ function loadUserInfo(){
 			'<td>' + jar.name + '</td>' + 
 			'<td>' + jar.goal + '</td>' + 
 			'<td>' + progressPct + '%</td>' + 
+			'<td>' + jar.progress + '</td>' + 
 		'</tr>';
 		jarsHTML = jarsHTML + jarHTML;
 	}

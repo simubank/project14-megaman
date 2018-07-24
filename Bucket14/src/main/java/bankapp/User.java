@@ -91,7 +91,7 @@ public class User {
 		challenges.add(coffeeChallenge);
 		Challenge McDsChallenge = new Challenge("MCDONALDS", 7, 3, Challenge.WEEKLY_CHALLENGE, (float)10);
 		challenges.add(McDsChallenge);
-		BucketJar defaultJar = new BucketJar("General Savings", 99999);
+		BucketJar defaultJar = new BucketJar("General Savings", 90000);
 		jars.add(defaultJar);
 		}
 	}
